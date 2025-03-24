@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Codeigest Guide</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="icon" href="/codeigest-icon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/codeigest-icon.png" />
+  <meta name="theme-color" content="#4f46e5" />
+  <link rel="manifest" href="/manifest.json" />
+  <style>
+    /* Tutorial specific styles */
+    .tutorial-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 30px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    }
+    
+    .tutorial-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 30px;
+    }
+    
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    
+    .back-link:hover {
+      color: var(--primary);
+    }
+    
+    .tutorial-title {
+      text-align: center;
+      color: var(--primary);
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    
+    .tutorial-subtitle {
+      text-align: center;
+      color: var(--secondary);
+      margin-bottom: 40px;
+    }
+    
+    .section {
+      margin-bottom: 60px;
+      padding: 30px;
+      background-color: var(--light-gray);
+      border-radius: 12px;
+    }
+    
+    .section-title {
+      color: var(--primary);
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .section-desc {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .feature-item {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .feature-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .feature-icon {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+    
+    .feature-title {
+      font-weight: 600;
+      color: var(--dark-text);
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+    
+    .feature-desc {
+      color: var(--secondary);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    
+    .workflow-steps {
+      counter-reset: step;
+      margin-bottom: 30px;
+    }
+    
+    .workflow-step {
+      display: flex;
+      margin-bottom: 30px;
+      position: relative;
+    }
+    
+    .step-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: var(--primary);
+      color: white;
+      font-weight: 700;
+      border-radius: 50%;
+      margin-right: 20px;
+      flex-shrink: 0;
+    }
+    
+    .step-content {
+      flex: 1;
+    }
+    
+    .step-title {
+      font-weight: 600;
+      color: var(--dark-text);
+      margin-bottom: 8px;
+      font-size: 1.2rem;
+    }
+    
+    .step-desc {
+      color: var(--dark-text);
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+    
+    .demo-video {
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 30px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+    
+    .demo-video video {
+      width: 100%;
+      display: block;
+    }
+    
+    .tutorial-footer {
+      text-align: center;
+      color: var(--secondary);
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid var(--gray-border);
+    }
+    
+    .email-link {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    
+    .email-link:hover {
+      text-decoration: underline;
+    }
+    
+    /* Privacy section with more neutral styling */
+    .privacy-section {
+      background-color: rgba(79, 70, 229, 0.05);
+      border-left: 4px solid var(--primary);
+      padding: 20px;
+      margin: 30px 0;
+      border-radius: 0 10px 10px 0;
+    }
+    
+    .privacy-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+    }
+    
+    .privacy-desc {
+      color: var(--dark-text);
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+    
+    .privacy-points {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .privacy-point {
+      color: var(--dark-text);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 8px;
+      padding-left: 16px;
+      position: relative;
+    }
+    
+    .privacy-point:before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+    }
+    
+    body.dark-mode .tutorial-container,
+    body.dark-mode .feature-item {
+      background-color: #1e293b;
+    }
+    
+    body.dark-mode .section {
+      background-color: #111827;
+    }
+    
+    body.dark-mode .privacy-section {
+      background-color: rgba(79, 70, 229, 0.1);
+    }
+    
+    body.dark-mode .email-link {
+      color: #818cf8;
+    }
+    
+    body.dark-mode .email-link:hover {
+      color: #a5b4fc;
+    }
+    
+    body.dark-mode .privacy-desc,
+    body.dark-mode .privacy-point,
+    body.dark-mode .step-desc,
+    body.dark-mode .feature-desc {
+      color: #e5e7eb;
+    }
+    
+    .video-loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 400px;
+      background-color: rgba(0, 0, 0, 0.05);
+      border-radius: 8px;
+    }
+    
+    .video-loading-text {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--secondary);
+      font-style: italic;
+    }
+    
+    .video-loading-text i {
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    
+    /* Video player enhanced styles */
+    .video-fallback-container {
+      position: relative;
+      width: 100%;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    /* Video progress bar */
+    .video-progress-container {
+      position: relative;
+      height: 5px;
+      background-color: rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    
+    .video-progress-bar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      background-color: var(--primary);
+      pointer-events: none;
+    }
+    
+    /* Video controls */
+    .video-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+    }
+    
+    .video-controls button {
+      background: none;
+      border: none;
+      color: var(--dark-text);
+      cursor: pointer;
+      padding: 5px;
+      font-size: 1rem;
+    }
+    
+    .video-controls button:hover {
+      color: var(--primary);
+    }
+    
+    .video-time {
+      font-size: 0.9rem;
+      color: var(--dark-text);
+    }
+    
+    body.dark-mode .video-controls button,
+    body.dark-mode .video-time {
+      color: var(--dark-text);
+    }
+    
+    body.dark-mode .video-controls button:hover {
+      color: var(--primary);
+    }
+    
+    @media (max-width: 768px) {
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .workflow-step {
+        flex-direction: column;
+      }
+      
+      .step-number {
+        margin-bottom: 15px;
+      }
+      
+      .tutorial-container {
+        padding: 20px 15px;
+      }
+      
+      .section {
+        padding: 20px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="tutorial-container">
+    <header class="tutorial-header">
+      <div>
+        <a href="index.html" class="back-link">
+          <i class="fas fa-arrow-left"></i>
+          Home
+        </a>
+      </div>
+      <div>
+        <i class="fas fa-book fa-2x" style="color: var(--primary);"></i>
+      </div>
+      <div>
+        <a href="index.html" class="back-link">
+          <i class="fas fa-times"></i>
+          Back
+        </a>
+      </div>
+    </header>
+    
+    <h1 class="tutorial-title">Codeigest Guide</h1>
+    <p class="tutorial-subtitle">Learn how to use Codeigest to process and view your project files</p>
+    
+    <div class="privacy-section">
+      <div class="privacy-title">
+        <i class="fas fa-shield-alt"></i>
+        Local Processing & Privacy
+      </div>
+      <p class="privacy-desc">
+        Codeigest processes all files locally in your browser. This ensures your data and code remain private.
+      </p>
+      <div class="privacy-points">
+        <p class="privacy-point">All data processing occurs directly in your browser - files are not uploaded to any server</p>
+        <p class="privacy-point">File content remains on your device at all times</p>
+        <p class="privacy-point">User preferences are stored only in your browser's local storage</p>
+        <p class="privacy-point">No analytics or tracking mechanisms are implemented</p>
+      </div>
+    </div>
+    
+    <section class="section">
+      <h2 class="section-title">
+        <i class="fas fa-info-circle"></i>
+        Getting Started
+      </h2>
+      <p class="section-desc">
+        Codeigest is a tool for managing, viewing, and extracting content from your project files. It helps you compile code across multiple files for documentation or AI assistance.
+      </p>
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-upload"></i>
+          </div>
+          <h3 class="feature-title">
+            File Upload
+          </h3>
+          <p class="feature-desc">
+            Drag & drop folders or select files to process your project.
+          </p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-folder"></i>
+          </div>
+          <h3 class="feature-title">
+            Folder Structure
+          </h3>
+          <p class="feature-desc">
+            Maintain your project organization with the folder tree view.
+          </p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-search"></i>
+          </div>
+          <h3 class="feature-title">
+            File Search
+          </h3>
+          <p class="feature-desc">
+            Find files by name using the search function.
+          </p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-chart-bar"></i>
+          </div>
+          <h3 class="feature-title">
+            Content Metrics
+          </h3>
+          <p class="feature-desc">
+            Track character count, line count, and token usage for your files.
+          </p>
+        </div>
+      </div>
+      <div class="demo-image">
+        <img src="tutorial-images/main-interface.png" alt="Codeigest features overview" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+      </div>
+    </section>
+    
+    <section class="section">
+      <h2 class="section-title">
+        <i class="fas fa-tasks"></i>
+        Basic Workflow
+      </h2>
+      <p class="section-desc">
+        Follow these steps to use Codeigest:
+      </p>
+      <div class="workflow-steps">
+        <div class="workflow-step">
+          <div class="step-number">
+            1
+          </div>
+          <div class="step-content">
+            <h3 class="step-title">
+              Upload Files
+            </h3>
+            <p class="step-desc">
+              Drag and drop files or folders into the upload area, or click the "Select Files" button to choose them manually.
+            </p>
+          </div>
+        </div>
+        <div class="workflow-step">
+          <div class="step-number">
+            2
+          </div>
+          <div class="step-content">
+            <h3 class="step-title">
+              Manage Extensions
+            </h3>
+            <p class="step-desc">
+              Add or remove file extensions to filter which files are included in the output. By default, Codeigest supports common code file types.
+            </p>
+          </div>
+        </div>
+        <div class="workflow-step">
+          <div class="step-number">
+            3
+          </div>
+          <div class="step-content">
+            <h3 class="step-title">
+              Navigate Files
+            </h3>
+            <p class="step-desc">
+              Use the file explorer to browse through your uploaded files. Click on a file to preview its contents.
+            </p>
+          </div>
+        </div>
+        <div class="workflow-step">
+          <div class="step-number">
+            4
+          </div>
+          <div class="step-content">
+            <h3 class="step-title">
+              View Output
+            </h3>
+            <p class="step-desc">
+              The right panel displays the combined content of processed files. Use the copy button to copy the output.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="demo-video" id="demo-video-container">
+        <div class="video-loading" id="video-loading">
+          <div class="video-loading-text">
+            <i class="fas fa-spinner"></i> Loading demo video...
+          </div>
+        </div>
+        <iframe id="workflow-video-iframe" style="display:none; width:100%; height:450px; border:none; border-radius:8px;" allowfullscreen></iframe>
+      </div>
+    </section>
+    
+    <section class="section">
+      <h2 class="section-title">
+        <i class="fas fa-star"></i>
+        Features
+      </h2>
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-file-code"></i>
+          </div>
+          <h3 class="feature-title">
+            File Extensions
+          </h3>
+          <p class="feature-desc">
+            Add file extensions to include additional file types in processing.
+          </p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-book"></i>
+          </div>
+          <h3 class="feature-title">
+            Notebook Support
+          </h3>
+          <p class="feature-desc">
+            Process .ipynb files with options to include or exclude outputs and images.
+          </p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-moon"></i>
+          </div>
+          <h3 class="feature-title">
+            Dark Mode
+          </h3>
+          <p class="feature-desc">
+            Switch between light and dark themes for comfortable viewing.
+          </p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+              <i class="fas fa-sync-alt"></i>
+            </div>
+            <h3 class="feature-title">
+              Dynamic Content Updates
+            </h3>
+            <p class="feature-desc">
+              See changes instantly when adding or removing extensions, with automatic re-processing of relevant files.
+            </p>
+        </div>
+      </div>
+    </section>
+    
+    <footer class="tutorial-footer">
+      Codeigest - Project File Reader
+      <br>
+      For questions or feedback, please contact <a href="mailto:contact@codeigest.com" class="email-link">contact@codeigest.com</a>
+    </footer>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Handle dark mode
+      applyTheme();
+      
+      // Handle video loading and initialization
+      initializeVideo();
+    });
+    
+    function applyTheme() {
+      const savedTheme = localStorage.getItem('codeigest-theme');
+      const prefersDarkMode = savedTheme === 'dark' || 
+                             (savedTheme !== 'light' && 
+                              window.matchMedia && 
+                              window.matchMedia('(prefers-color-scheme: dark)').matches);
+      
+      if (prefersDarkMode) {
+        document.body.classList.add('dark-mode');
+      }
+    }
+    
+    function initializeVideo() {
+      // Using an iframe with the video file directly instead of the video element
+      // This bypasses many browser-specific video seeking issues
+      const iframe = document.getElementById('workflow-video-iframe');
+      const loadingElement = document.getElementById('video-loading');
+      const videoSrc = 'tutorial-images/workflow_vid.mp4';
+      
+      if (!iframe || !loadingElement) return;
+      
+      // Show loading indicator
+      loadingElement.style.display = 'flex';
+      iframe.style.display = 'none';
+      
+      // Setup iframe to load the video directly
+      // Adding a timestamp to prevent caching issues
+      const timestamp = new Date().getTime();
+      iframe.src = videoSrc + '?t=' + timestamp;
+      
+      // Show the iframe once it's loaded
+      iframe.onload = function() {
+        loadingElement.style.display = 'none';
+        iframe.style.display = 'block';
+      };
+      
+      // Handle loading error
+      iframe.onerror = function() {
+        loadingElement.innerHTML = '<div class="video-loading-text">' +
+          '<i class="fas fa-exclamation-circle"></i> ' +
+          'Error loading video. <a href="javascript:void(0)" onclick="initializeVideo()">Retry</a>' +
+          '</div>';
+      };
+    }
+    
+    // Make function available globally so it can be called from retry link
+    window.initializeVideo = initializeVideo;
+    
+    // Implement page visibility change detection to reload video when coming back to page
+    document.addEventListener('visibilitychange', function() {
+      if (document.visibilityState === 'visible') {
+        // If returning to the page, reinitialize the video
+        initializeVideo();
+      }
+    });
+  </script>
+</body>
+</html>

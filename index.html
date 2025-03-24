@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Codeigest - A tool to process and extract content from your project files. All processing is done locally - your data never leaves your device.">
+  <meta name="keywords" content="code extraction, code processing, file processing, project summary">
+  <meta name="author" content="Codeigest">
+  <title>Codeigest - Project File Reader</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <script src="js/utils.js"></script>
+  <script src="js/notebookProcessing.js"></script>
+  <script src="js/fileHandlers.js"></script>
+  <script src="js/uiController.js"></script>
+  <script src="js/main.js"></script>
+  <link rel="icon" href="/codeigest-icon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/codeigest-icon.png" />
+  <meta name="theme-color" content="#4f46e5" />
+  <link rel="manifest" href="/manifest.json" />
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>
+        <i class="fas fa-code"></i>
+        Codeigest
+      </h1>
+      <div class="header-actions">
+        <a href="tutorial.html" class="guide-btn">
+          <i class="fas fa-info-circle"></i>
+          Guide
+        </a>
+        <a href="#" class="github-link">
+          <i class="fab fa-github"></i>
+        </a>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
+    </header>
+    
+    <div class="drop-area" id="drop-area" tabindex="0">
+      <div class="upload-icon">
+        <i class="fas fa-file-upload fa-3x"></i>
+      </div>
+      <div class="drop-area-text">
+        Drag & Drop Files or Folders Here
+      </div>
+      <p class="or-text">or</p>
+      <input type="file" id="file-input" multiple webkitdirectory directory>
+      <button id="select-button" class="btn primary-btn">
+        <i class="fas fa-folder-open"></i> Select Files
+      </button>
+      <div class="privacy-indicator">
+        <i class="fas fa-lock"></i>
+        <span>All processing happens locally on your device</span>
+      </div>
+      <p class="info-text">
+        Note: Folder upload is supported in Chrome, Edge, and Firefox.
+      </p>
+    </div>
+    
+    <div class="main-content-grid">
+      <div class="left-column">
+        <div class="settings-section">
+          <div class="section-header">
+            <h2>
+              <i class="fas fa-cog"></i>
+              Settings
+            </h2>
+          </div>
+          <div class="extension-section">
+            <label class="settings-label" for="extension-input">
+              Add File Extension (e.g. .py, .ipynb):
+            </label>
+            <div class="extension-input-group">
+              <div class="input-container">
+                <input type="text" id="extension-input" class="extension-input" placeholder=".extension">
+              </div>
+              <button id="add-extension-button" class="btn primary-btn">
+                <i class="fas fa-plus"></i> Add
+              </button>
+            </div>
+          </div>
+          <div class="extension-current-section">
+            <h3>
+              <i class="fas fa-tags"></i>
+              Currently Allowed Extensions
+            </h3>
+            <div class="extensions-list" id="extensions-list">
+              <!-- Extensions tags will be dynamically added here -->
+            </div>
+          </div>
+        </div>
+        
+        <div class="file-explorer-section">
+          <div class="section-header">
+            <h2>
+              <i class="fas fa-folder-open"></i>
+              Files
+            </h2>
+            <div class="section-actions">
+              <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="search-input" class="search-input" placeholder="Search files...">
+              </div>
+              <button id="clear-button" class="btn secondary-btn hidden">
+                <i class="fas fa-trash-alt"></i> Clear
+              </button>
+            </div>
+          </div>
+          <div class="explorer-controls">
+            <button id="expand-all-button" class="btn text-btn">
+              <i class="fas fa-expand-arrows-alt"></i> Expand All
+            </button>
+            <button id="collapse-all-button" class="btn text-btn">
+              <i class="fas fa-compress-arrows-alt"></i> Collapse All
+            </button>
+          </div>
+          <div class="file-explorer-container">
+            <div class="file-tree" id="file-tree">
+              <div id="file-placeholder" class="file-placeholder">
+                No files uploaded yet
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="right-column">
+        <div class="output-section">
+          <div class="section-header">
+            <h2>
+              <i class="fas fa-file-alt"></i>
+              Output
+            </h2>
+            <div class="count-container">
+              <div class="count-item" id="char-count">
+                <i class="fas fa-font count-icon"></i> Characters: 0
+              </div>
+              <div class="count-item" id="line-count">
+                <i class="fas fa-align-left count-icon"></i> Lines: 0
+              </div>
+              <div class="count-item" id="token-count">
+                <i class="fas fa-code count-icon"></i> Tokens: 0
+              </div>
+            </div>
+          </div>
+          <div class="output-wrapper">
+            <div class="output-container empty" id="output-container">
+              <div class="output-placeholder" id="output-placeholder">
+                <i class="fas fa-file-code fa-4x"></i>
+                <p>
+                  File contents will appear here after uploading files.
+                </p>
+              </div>
+              <pre id="output-text" class="output-text hidden"></pre>
+            </div>
+            <button id="copy-button" class="copy-btn hidden" aria-label="Copy content to clipboard">
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
+          <div class="notebook-settings hidden" id="notebook-settings">
+            <h3>
+              <i class="fas fa-book"></i>
+              Jupyter Notebook Settings
+            </h3>
+            <div class="toggle-container">
+              <label class="toggle-switch">
+                <input type="checkbox" id="include-output-toggle">
+                <span class="toggle-slider"></span>
+              </label>
+              Include cell outputs
+            </div>
+            
+            <div class="toggle-container">
+              <label class="toggle-switch">
+                <input type="checkbox" id="include-images-toggle">
+                <span class="toggle-slider"></span>
+              </label>
+              Include image data
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <footer class="footer">
+      <div class="footer-content">
+        <p>
+          Codeigest - Project File Reader
+          <span class="privacy-badge"><i class="fas fa-shield-alt"></i> 100% Local Processing - Your Data Never Leaves Your Device</span>
+        </p>
+        <a href="mailto:contact@codeigest.com" class="contact-link">
+          <i class="far fa-envelope"></i> contact@codeigest.com
+        </a>
+      </div>
+    </footer>
+  </div>
+  
+  <div class="progress-container" id="progress-container">
+    <div class="spinner"></div>
+    <p class="progress-text" id="progress-text">
+      Processing files...
+    </p>
+  </div>
+  
+  <div class="modal" id="preview-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">
+          File Preview
+        </h3>
+        <button class="modal-close" id="close-modal" aria-label="Close preview">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre id="modal-file-content"></pre>
+      </div>
+    </div>
+  </div>
+  
+  <div class="help-hint" id="help-hint">
+    <div class="help-hint-content">
+      <i class="fas fa-lightbulb"></i>
+      <p>
+        Need help? Check out our <a href="tutorial.html">interactive guide</a>!
+      </p>
+      <button id="dismiss-hint" aria-label="Dismiss hint">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+  
+  <style>
+    /* Additional styles for privacy indicators */
+    .privacy-indicator {
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--secondary);
+      font-size: 0.9rem;
+      background-color: rgba(79, 70, 229, 0.1);
+      padding: 6px 12px;
+      border-radius: 20px;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .privacy-indicator i {
+      color: var(--primary);
+    }
+    
+    .privacy-badge {
+      margin-left: 10px;
+      font-size: 0.8rem;
+      background-color: rgba(79, 70, 229, 0.1);
+      color: var(--primary);
+      padding: 3px 8px;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    body.dark-mode .privacy-indicator,
+    body.dark-mode .privacy-badge {
+      background-color: rgba(79, 70, 229, 0.2);
+    }
+  </style>
+</body>
+</html>
