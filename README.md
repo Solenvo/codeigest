@@ -16,7 +16,7 @@
 Codeigest is a client-side web application with no backend dependencies. To run it locally:
 1. Clone this repository:
    ```bash
-   git clone https://github.com/username/codeigest.git
+   git clone https://github.com/Solenvo/codeigest.git
    cd codeigest
    ```
 2. Start a local server:
